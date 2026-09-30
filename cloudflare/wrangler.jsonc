@@ -1,0 +1,21 @@
+{
+  // 改名后必须同步 dashboard 里的 Worker 名称，否则部署会变成两个不同的资源
+  "name": "sensenova-studio",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-30",
+  "compatibility_flags": ["nodejs_compat"],
+
+  // 静态资源（index.html / manifest / sw.js / 图标）直接由 assets 提供，
+  // 404 时回落 index.html，与本地 server.py 的行为保持一致
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application"
+  },
+
+  // 上游地址做成变量：换环境时只改 dashboard 的 Variables，不用改代码重新部署
+  // 结尾的 /v1 由代码统一补上，所以这里只填纯 host
+  "vars": {
+    "UPSTREAM": "https://token.sensenova.cn"
+  }
+}
